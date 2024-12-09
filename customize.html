@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="customize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script defer src="customize.js"></script>
+    <script   src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.2.4/fabric.min.js"></script>
+    <!-- Include dom-to-image from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
+
+    <script>
+        // Fetch the data from the API
+        fetch('http://custmize.digitalgo.net/api/get_single_product/DIHAW14054')
+            .then(response => response.json()) // Parse the response as JSON
+            .then(data => {
+                if (data.success) {
+                    // Colors Section
+                    const colorsList = document.querySelector('.colors'); // Get the colors ul element
+                    const colors = data.data.colors; // Extract the colors array
+                    const imageElement = document.getElementById('image'); // Get the main image element
+        
+                    // Check if imageElement exists
+                    if (!imageElement) {
+                        console.error("Main image element not found.");
+                        return;
+                    }
+        
+                    // Loop through each color and create a list item for it
+                    colors.forEach(color => {
+                        const liElement = document.createElement('li'); // Create a new li element for each color
+                        liElement.style.backgroundColor = color.color_code; // Set the background color using the color code
+                        liElement.classList.add('color-option'); // Add a class for styling or identification
+                        colorsList.appendChild(liElement); // Add the li element to the colors list
+                        const colorsList1 = document.querySelectorAll('.colors li');
+                            console.log(colorsList1);
+                            // Add a click event listener to each <li>
+                            colorsList1.forEach(item => {
+                                item.addEventListener('click', () => {
+                                    // Remove the green border from all items
+                                    colorsList1.forEach(i => i.style.border = '');
+
+                                    // Add a green border with 15px radius to the clicked item
+                                    item.style.border = '2px solid green';
+                                    item.style.borderRadius = '5px';
+                                    item.style.cursor = 'pointer';
+                                });
+                            });
+                        // Add a click event listener to each color
+                        liElement.addEventListener('click', () => {
+                            // Log the clicked color for debugging
+                            console.log("Color clicked:", color);
+        
+                            // Update the main image with the front image of the selected color
+                            if (color.front_image) {
+                                imageElement.src = color.front_image; // Update the image source
+                                imageElement.alt = `Color: ${color.name}`; // Update the alt text
+                            } else {
+                                console.error("Front image missing for color:", color.name);
+                            }
+                            
+                            // Save the selected color to local storage
+                            localStorage.setItem('selectedColor', JSON.stringify({
+                                id: color.id,
+                                name: color.name,
+                                color_code: color.color_code
+                            }));
+        
+                            // Force reflow (fixes rendering issues in some browsers)
+                            imageElement.offsetHeight; // Accessing this property forces a reflow
+                        });
+                    });
+        
+                    // Sizes Section
+                    const sizesList = document.querySelector('.Sizes'); // Get the Sizes ul element
+                    const sizes = data.data.sizes; // Extract the sizes array
+        
+                    sizes.forEach(size => {
+                        const liElement = document.createElement('li'); // Create a new li element for each size
+                        liElement.textContent = size.size_name; // Set the text to the size name
+                        liElement.classList.add('size-option'); // Add a class for styling or identification
+                        sizesList.appendChild(liElement); // Add the li element to the sizes list
+                        const sizeItems = document.querySelectorAll('.Sizes li');
+                        console.log(sizeItems);
+                        // Add a click event listener to each <li>
+                        sizeItems.forEach(item => {
+                            item.addEventListener('click', () => {
+                                // Remove the green border from all items
+                                sizeItems.forEach(i => i.style.border = '');
+
+                                // Add a green border with 15px radius to the clicked item
+                                item.style.border = '2px solid green';
+                                item.style.borderRadius = '5px';
+                                item.style.cursor = 'pointer';
+                            });
+                        });
+                        // Add a click event listener to each size
+                        liElement.addEventListener('click', () => {
+                            console.log('Selected size:', size.size_name); // Log the selected size
+                            localStorage.setItem('selectedSize', JSON.stringify({
+                                id: size.size_id,
+                                name: size.size_name,
+                                size_code: size.size_code
+                            })); // Save to local storage
+                        });
+                    });
+                } else {
+                    console.error("Error: Data was not successful:", data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching product data:", error);
+            });
+        </script>
+        
+    
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Fetch the data from the API
+        fetch('http://custmize.digitalgo.net/api/get_single_product/DIHAW14054')
+            .then(response => response.json())  // Parse the response as JSON
+            .then(data => {
+                if (data.success) {
+                    const productId = data.data.id;
+                    const categoryName = data.data.category.name;  // Extract the category name from the response
+                    console.log(categoryName,productId);
+                    const subCategoryName = data.data.sub_category.name;  // Extract the sub-category name from the response
+    
+                    // Update the product name in <h1>
+                    document.querySelector('#productName').textContent = categoryName;
+    
+                    // Update the sub-category name in <h2>
+                    document.querySelector('#subCategoryName').textContent = subCategoryName;
+                    localStorage.setItem('ProductInfo', JSON.stringify({
+                                Product_id: productId,
+                                name: categoryName,
+                                
+                            }));
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching product data:", error);
+            });
+    });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fetch the data from the API
+            fetch('http://custmize.digitalgo.net/api/get_single_product/DIHAW14054')
+                .then(response => response.json())  // Parse the response as JSON
+                .then(data => {
+                    if (data.success) {
+                        const deliveryDate = data.data.delivery_date;  // Extract the delivery date from the response
+                        const currentMonth = new Date().toLocaleString('default', { month: 'long' });  // Get the current month (e.g., "October")
+        
+                        // Format the delivery date in the button
+                        const deliveryText = `${deliveryDate} ${currentMonth}`;
+                        
+                        // Set the delivery text in the button
+                        document.querySelector('.delivery').textContent = deliveryText;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching product data:", error);
+                });
+        });
+
+        document.querySelectorAll('.size-option').forEach(item => {
+  item.addEventListener('click', () => {
+      console.log('Clicked size:', item.textContent);  // Test the click listener
+      localStorage.setItem('selectedSize', item.textContent);
+      
+  });
+});
+        </script>
+        <script>
+            
+        </script>
+    <title>customize product</title>
+</head>
+<body>
+    <header>
+        <nav dir="rtl">
+            <img src="images/Logo.png" id="home-logo" alt="الشعار">
+            <div dir="ltr">
+                
+                <input type="text" placeholder="عم ماذا تبحث بالضبط؟">
+                <img src="images/icons8-search-500 (2).png" alt="بحث">
+            </div>
+            <div class="dropBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="links">
+                <a href="">عربي</a>
+               
+                <a href="login.html" id="loginLink" style="border:2px solid rgb(90, 128, 0); padding:8px;border-radius:5px;">
+                    <i class="fa-solid fa-user"></i> تسجيل الدخول
+                </a>
+                <a href="Cart.html" id="cart-link">
+                    <i class="fa-solid fa-cart-plus"> سلة التسوق</i>
+                    <div id="cart-count" class="cart-count"></div> <!-- Red dot container -->
+                </a>
+                
+                
+            </div>
+        </nav>
+    </header>
+    <main>
+        <aside class="left-aside">
+            <h1 id="productName">CICC premium Hoodi /Cotton Heritage M2580</h1>
+            <h2 id="subCategoryName"></h2>
+            <div class="review">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span> 4.6</span>
+            </div>
+
+            <h3 class="stock">
+                13 products in stock
+            </h3>
+            <p style="display:none ;">
+                <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati similique, fugiat delectus vero cumque sit voluptas provident voluptatem sunt quo aperiam, labore velit, nisi sequi itaque et molestias.  -->
+            </p>
+            <h4> Delivery</h4>
+            <button class="delivery">
+                4 - 9 october
+            </button>
+            <h4>Guiding pictures</h4>
+            <div class="slider-container">
+                <button class="nav-button left-button" id="prevBtn">&#10094;</button>
+                <div class="image-slider" id="imageSlider">
+
+                    <!-- <img src="https://via.placeholder.com/300x200?text=Image+4" alt="Image 4">
+                    <img src="https://via.placeholder.com/300x200?text=Image+3" alt="Image 3">-->
+                    <img src="images/white t-shit.jpeg" alt="Image 4" > 
+                     <img src="images/t-shirt_Back-removebg-preview.png" alt="Image 1">
+                    <img src="images/t-shirt left.png" alt="Image 2">
+                    <img src="images/t-shirt right.png" alt="Image 3">
+                    <img src="images/white t-shit.jpeg" alt="Image 4" > 
+                     <img src="images/t-shirt_Back-removebg-preview.png" alt="Image 1">
+                </div>
+                <button class="nav-button right-button" id="nextBtn">&#10095;</button>
+            </div>
+            <h4>
+                Quantity
+            </h4>
+
+            <div class="counter">
+                <i class="fa fa-minus" aria-hidden="true"></i>
+                <span class="count">5</span>
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </div>
+
+            <button class="add" onclick=saveToLocalStorage()  id="saveBtn">Add to card</button>
+            <button class="buy">Buy now</button>
+            <section class="Tracker" id="draggableDiv"> 
+                <div>
+                    <span>Unit Price</span>
+                    <span class="piecePrice">00</span>
+                </div>
+                <div >
+                    <span>Total Price</span>
+                    <span class="totalPrice"></span>
+                </div>
+            </section>
+        </aside>
+
+
+        <section class="product">
+            <div class="commands ">
+                <div class="toggelers">
+                    <p>Front</p>
+                    <p>Back</p>
+                </div>
+            
+            <div class="btns">
+                    <button id="downloadBtn" onclick="downloadImage()">Download</button>
+                    <button>Preview</button>    
+            </div>
+            </div>
+            
+            <div id="tools">
+                <div id="tshirt-div">
+                <img id="image" src="images/whiteBackendTshirt.png" alt="">
+                <div class="absoluteBox"><canvas id="canvas" position= "absolute"
+                    top= "0"
+                    left= "-10px !important"
+                    width= "500px"
+                    height= "350px" background-color= "aqua;"  ></canvas></div>
+                </div>
+                <section class="customizations">
+                    
+                    <ul class="colors">
+                        <h4>Colors</h4>
+                        <!-- <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li> -->
+                    </ul>
+                    
+                    <ul class="Sizes">
+                        <h4>Sizes</h4>
+                        
+                       <!--  <li>S</li>
+                        <li>M</li>
+                        <li>L</li>
+                        <li>XL</li>
+                        <li>XXL</li>
+                        <li>XXL</li> -->
+                    </ul>
+                    
+                    <ul class="material">
+                        <h4>Material</h4>
+                        <li>Cotton</li>
+                        
+                        
+                    </ul>
+                </section>
+               
+         </div>
+        </section>
+        <aside class="right">
+            <h1>
+                Print options
+            </h1>
+            <label for="text">
+                Text
+            </label>
+            <br/>
+            <div class="editor" contenteditable="true" data-placeholder="" ></div>
+            <div class="toolbar">
+                <button onclick="formatText('bold')" title="Bold (Ctrl+B)"><b>B</b></button>
+                <button onclick="formatText('italic')" title="Italic (Ctrl+I)"><i>I</i></button>
+                <button onclick="formatText('underline')" title="Underline (Ctrl+U)"><u>U</u></button>
+                <select onchange="formatText('fontSize', this.value)" title="Font Size">
+                  <option value="3">Normal</option>
+                  <option value="1">Small</option>
+                  <option value="5">Large</option>
+                  <option value="7">Huge</option>
+                </select>
+                <input type="color" onchange="formatText('foreColor', this.value)" title="Text Color">
+                <select onchange="formatText('fontName', this.value)" title="Font Family">
+                  <option value="Arial">Arial</option>
+                  <option value="Courier New">Courier New</option>
+                  <option value="Georgia">Georgia</option>
+                  <option value="Times New Roman">Times New Roman</option>
+                  <option value="Verdana">Verdana</option>
+                </select>
+              </div>
+              
+              <!-- Contenteditable editor -->
+              <!-- <input type="text" id="textInput" placeholder="Enter text to add" /> -->
+              <!-- <input type="text" id="textInput" placeholder="Enter text to add" /> -->
+              <input type="file" id="imageInput" accept="image/*" style="display: none;"/>
+              <button style="display: none;">Add Text</button>
+              
+                    <div class="shirt-logo">
+                        <div class="upload"> 
+                            <button id="triggerButton">
+                                <img src="images/customers/sticky-note_11737499.png" alt="">
+                            </button>
+                            <button>
+                                <img src="images/customers/image_12649310.png" alt="">
+                            </button>
+                            <button id="deleteButton">
+                                <i class="fa-solid fa-eraser"></i>
+                            </button>
+                            <button id="addTextButton">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                        </div>
+                        <div class="album" id="albumModal">
+                            <a href="#" class="album-item">
+                                <div style="background-image: url(https://custmize.digitalgo.net/custom/images/logo.png)"><img bgsrc="https://custmize.digitalgo.net/custom/images/logo.png" src="https://custmize.digitalgo.net/custom/images/blank.png"></div>
+                            </a>
+                            <a href="#" class="album-item">
+                                <div style="background-image: url(https://custmize.digitalgo.net/custom/images/logo.png)"><img bgsrc="https://custmize.digitalgo.net/custom/images/logo.png" src="https://custmize.digitalgo.net/custom/images/blank.png"></div>
+                            </a>
+                            <a href="#" class="album-item">
+                                <div style="background-image: url(https://custmize.digitalgo.net/custom/images/logo.png)"><img bgsrc="https://custmize.digitalgo.net/custom/images/logo.png" src="https://custmize.digitalgo.net/custom/images/blank.png"></div>
+                            </a>
+                            <a href="#" class="album-item">
+                                <div style="background-image: url(https://custmize.digitalgo.net/custom/images/logo.png)"><img bgsrc="https://custmize.digitalgo.net/custom/images/logo.png" src="https://custmize.digitalgo.net/custom/images/blank.png"></div>
+                            </a>
+                            <a href="#" class="album-item">
+                                <div style="background-image: url(https://custmize.digitalgo.net/custom/images/logo.png)"><img bgsrc="https://custmize.digitalgo.net/custom/images/logo.png" src="https://custmize.digitalgo.net/custom/images/blank.png"></div>
+                            </a>
+                            <a href="#" class="album-item">
+                                <div style="background-image: url(https://custmize.digitalgo.net/custom/images/logo.png)"><img bgsrc="https://custmize.digitalgo.net/custom/images/logo.png" src="https://custmize.digitalgo.net/custom/images/blank.png"></div>
+                            </a>
+
+
+                        </div>
+
+                    </div>
+                </div>
+                <button class="add" style="margin-top: 10px; display: none;"  >Save</button>
+                <button class="buy" style="margin-top: 10px; color:red; border: 1px solid red;display: none;" >Delete</button>
+        </aside>
+    </main>
+</body>
+</html>

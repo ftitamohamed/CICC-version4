@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Profile.css">
+    <script defer  src="tracker.js"></script>
+    <link rel="stylesheet" href="tracker.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script defer src="Profile.js"></script>
+    <script defer>
+        /* const cartData1 = JSON.parse(localStorage.getItem('cartData1')) || { cart: { orders: [] } };
+        const orders = cartData1.cart.orders || [];
+        let ordersSection = document.querySelector('.orders');
+        console.log(ordersSection);
+       
+    
+        // Loop through the orders and create cart items
+        orders.forEach((order, index) => {
+            if (order) {
+                const itemElement = createCartItem(order, index);
+                ordersSection.appendChild(itemElement);
+            }
+        });
+
+        function createCartItem(order, index) {
+                const item = document.createElement('div');
+                item.classList.add('item');
+                item.dataset.index = index;
+                const color = order.color || '#fff';
+                const size = order.size_id || 'L';
+                const productName = order.product_name || 'Product';
+                const quantity = order.quantity || 1;
+                const price = order.full_price || 0;
+        
+                item.innerHTML = `
+                    <p>${productName} <p> <br/> <p> ${price}</p>
+                `;
+        
+                
+            } */
+            </script>
+    <title>Profile</title>
+</head>
+<body>
+    <header>
+        <nav dir="rtl">
+            <img src="images/Logo.png" id="home-logo" alt="الشعار">
+            <div dir="ltr">
+                
+                <input type="text" placeholder="عم ماذا تبحث بالضبط؟">
+                <img src="images/icons8-search-500 (2).png" alt="بحث">
+            </div>
+            <div class="dropBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="links">
+                <a href="">عربي</a>
+               
+                <a href="login.html" id="loginLink" style="border:2px solid rgb(90, 128, 0); padding:8px;border-radius:5px;">
+                    <i class="fa-solid fa-user"></i> تسجيل الدخول
+                </a>
+                <a href="Cart.html" id="cart-link">
+                    <i class="fa-solid fa-cart-plus"> سلة التسوق</i>
+                    <div id="cart-count" class="cart-count"></div> <!-- Red dot container -->
+                </a>
+                
+                
+            </div>
+        </nav>
+    </header>
+    <main>
+        <aside>
+            <a  class="profile"> <i class="fa-solid fa-user"></i> Profile</a>
+            <a href=""> <i class="fa-solid fa-cart-shopping"> </i> Cart</a>
+            <a  class="tracker-command"> <i class="fas fa-route"></i> Order Tracker</a>
+            <a href=""> <i class="fa-solid fa-credit-card"> </i>Payments</a>
+            <a href=""> <i class="fa fa-history" aria-hidden="true"> </i>History</a>
+            <a id="logoutLink" href="#">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+            
+        </aside>
+        
+        <section class="settings">
+            
+            <section class="offer"  >
+                <img src="images/customers/profile1_transparent.png" alt="">
+            
+                <div>
+                
+                    <h1>Personal Experience  
+                    </h1>
+                    <p>
+                        A complete profile tells us more about what you exactly prefers 
+                    </p>
+                    <div  class="bar">
+                        <span ></span>
+                        <span>30%</span>
+                    </div>
+                </div>
+                
+               </section>
+               
+            <form action="" >
+                
+             <div>
+                <label for="fname">First Name</label>
+                <input type="text" id="fname">
+             </div>
+            <div>
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname"> 
+            </div>
+            
+        
+            
+                <div>
+                <label for="email"> Email</label>
+                <input type="email" id="email">
+            </div> 
+
+            <div>
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone">
+            </div>
+            
+                
+                    <div>
+                <label for="state">State/Region</label>
+                <input type="text" id="state">
+            </div> 
+                
+                <div >
+                    <Label style="margin-left:5px"> Gender</Label style="margin-left:5px">
+                    <div class="radio-group">
+                    <label>
+                      <input type="radio" name="gender" value="male">
+                        Male
+                    </label>
+                    <label>
+                        <input type="radio" name="gender" value="female">
+                        Female
+                    </label>
+                    </div>
+                </div>
+                <div>
+                    <label for="contry">Contry</label>
+                    <input type="text" id="contry">
+                </div>  
+                <div>
+                    <label for="Birthday">Birthday</label>
+                    <input type="date" id="Birthday">
+                </div>
+            
+            
+                <!-- <label for="serviceType">Type Of Service</label>
+                <select name="serviceType" id="serviceType">
+                    <option value="web-development">Web-development</option>
+                    <option value="mobile-development">Mobile-development</option>
+                    <option value="cloud-services">Cloud-services</option>
+                    <option value="cyber-security">Cyber-security</option>
+                </select>
+                <label for="message">Do you have any Message/Question?</label>
+                <input type="text" id="message"> -->
+            
+                <button type="submit"> Update Profile</button> 
+            </form>
+            
+            <section class="tracker" style="display: none;">
+                <section class="orders" style="display: block;">
+               
+                </section>
+                <div class="resume">
+                    
+                </div>
+                <!-- <h1>طلبك قيد الإنجاز   </h1>
+                <div class="process">
+                    <div class="proc">
+                        <img src="images/customers/process1_transparent.png" alt="معالجة الطلب">
+                        <i class="fa-regular fa-circle-dot"></i>
+                        <h3>معالجة الطلب</h3>
+                        <p>فور استلام طلبك، يقوم فريقنا بمراجعته والتأكد من جميع التفاصيل لضمان جودة التنفيذ.</p>
+                    </div>
+                    <div class="proc">
+                        <img src="images/customers/printing_transparent.png" alt="طباعة المنتج">
+                        <i class="fa-regular fa-circle-dot"></i>
+                        <h3>طباعة المنتج</h3>
+                        <p>يتم طباعة التصميم الخاص بك باستخدام أحدث تقنيات الطباعة لضمان جودة فائقة.</p>
+                    </div>
+                    <div class="proc">
+                        <img src="images/customers/shipping_transparent.png" alt="شحن الطلب">
+                        <i class="fa-regular fa-circle-dot"></i>
+                        <h3>شحن الطلب</h3>
+                        <p>بعد الانتهاء من الطباعة، نقوم بتغليف المنتج بعناية وإرساله إلى عنوانك بأسرع وقت ممكن.</p>
+                    </div>
+                </div> -->
+                
+            </section>
+        </section>
+        
+        
+    </main>
+</body>
+</html>
